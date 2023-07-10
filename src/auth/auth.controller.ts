@@ -22,9 +22,12 @@ export class AuthController {
     }
     const result = this.authService.registerUser(user);
     if (result) {
-      return 'Utente registrato con successo';
+      return {
+        email: user.email,
+        msg: 'Utente registrato con successo',
+      };
     } else {
-      return "Errore durante la registrazione dell'utente";
+      return { msg: "Errore durante la registrazione dell'utente" };
     }
   }
 
@@ -32,9 +35,12 @@ export class AuthController {
   login(@Body() params: User): any {
     const token = this.authService.login(params.email, params.password);
     if (token) {
-      return { token };
+      return {
+        token,
+        email: params.email,
+      };
     } else {
-      return 'Credenziali non valide';
+      return { msg: 'Credenziali non valide' };
     }
   }
 }
